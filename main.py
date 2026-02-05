@@ -60,15 +60,19 @@ class DiscordWebhookNotifier(Notifier):
         self.webhook_url = webhook_url
 
     def notify(self, result: StockResult) -> None:
-        if not result.is_available:
-            return  # 売り切れ中は Discord には送らない
-        payload = {
-            "content": (
+        if result.is_available:
+            content = (
                 f"🎉 **在庫復活！**\n"
                 f"**{result.variant_name}** が購入可能になりました！\n"
                 f"{result.url}"
-            ),
-        }
+            )
+        else:
+            content = (
+                f"😢 **売り切れ**\n"
+                f"**{result.variant_name}** が売り切れになりました。\n"
+                f"{result.url}"
+            )
+        payload = {"content": content}
         try:
             resp = requests.post(self.webhook_url, json=payload, timeout=10)
             resp.raise_for_status()
