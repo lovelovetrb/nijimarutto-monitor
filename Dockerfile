@@ -5,6 +5,9 @@ WORKDIR /app
 COPY pyproject.toml uv.lock .python-version ./
 RUN uv sync --frozen --no-install-project
 
-COPY main.py ./
+COPY src/ ./src/
+COPY config.yaml ./
 
-CMD ["uv", "run", "python", "main.py"]
+RUN uv sync --frozen
+
+CMD ["uv", "run", "nijimarutto-monitor"]

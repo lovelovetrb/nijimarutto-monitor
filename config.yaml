@@ -1,0 +1,9 @@
+# にじさんじショップ 在庫監視 設定ファイル
+# targets に監視対象を追加してください
+
+check_interval_sec: 600  # チェック間隔（秒）
+
+targets:
+  - url: "https://shop.nijisanji.jp/SSZS-56575.html"
+    variant_name: "葛葉"
+    label: "にじまるっと 葛葉"
